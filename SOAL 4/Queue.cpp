@@ -69,18 +69,41 @@ void simulasiAntrian(Queue& antrian, int jumlahLoket) {
     std::cout << "Sisa antrian: " << antrian.size() << " pelanggan\n";
 }
 
+// Fungsi untuk meminta waktu layanan dalam format jam dan menit, lalu mengkonversi ke menit
+int inputWaktuLayanan() {
+    int jam, menit;
+    std::cout << "Masukkan waktu layanan (jam menit): ";
+    std::cin >> jam >> menit;
+    int totalMenit = jam * 60 + menit;
+    std::cout << "Waktu layanan dalam menit: " << totalMenit << " menit\n";
+    return totalMenit;
+}
+
 int main() {
     Queue antrian;
     int jumlahLoket = 3;
+    int pilihan;
+    int nomorPelanggan = 1;
 
-    // Contoh input pelanggan
-    antrian.enqueue({1, 5});  // Pelanggan nomor 1 dengan waktu layanan 5 menit
-    antrian.enqueue({2, 10}); // Pelanggan nomor 2 dengan waktu layanan 10 menit
-    antrian.enqueue({3, 7});  // Pelanggan nomor 3 dengan waktu layanan 7 menit
-    antrian.enqueue({4, 3});  // Pelanggan nomor 4 dengan waktu layanan 3 menit
-    antrian.enqueue({5, 8});  // Pelanggan nomor 5 dengan waktu layanan 8 menit
+    std::cout << "Simulasi Antrian Layanan Bank\n";
+    do {
+        std::cout << "\nMenu:\n";
+        std::cout << "1. Tambah Pelanggan\n";
+        std::cout << "2. Selesai Memasukkan Pelanggan\n";
+        std::cout << "Pilihan: ";
+        std::cin >> pilihan;
 
-    std::cout << "Simulasi Antrian Layanan Bank\n\n";
+        if (pilihan == 1) {
+            int waktuLayanan = inputWaktuLayanan();  // Menggunakan fungsi input waktu
+            antrian.enqueue({nomorPelanggan, waktuLayanan});
+            nomorPelanggan++;
+            std::cout << "Pelanggan berhasil ditambahkan ke antrian.\n";
+        } else if (pilihan != 2) {
+            std::cout << "Pilihan tidak valid. Coba lagi.\n";
+        }
+    } while (pilihan != 2);
+
+    std::cout << "\nMemulai simulasi antrian...\n\n";
     simulasiAntrian(antrian, jumlahLoket);
 
     return 0;
